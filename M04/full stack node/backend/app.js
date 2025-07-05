@@ -1,20 +1,34 @@
 //setup.
 
 const expres = require("express")
+var cors= require('cors')
+
 
 const app = expres()
-
+app.use(cors())
+const router = expres.Router()
 
 //start the web server
-app.listen(3000,function(){
-    console.log("Listening on port 3000")
+
+
+router.get("/songs",function(req,res){
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    const song =[
+        {
+        title:"Uptown funk",
+        artist: "Bruno mars",
+        populatirt: 10,
+        genre: ["funk","boogie"],
+    },{
+       title:"Super Uptown funk",
+        artist: "Saturn",
+        populatirt: 10,
+        genre: ["funky","woogie"], 
+    }
+]
+    res.json(song)
+
 })
 
-app.get("/hello",function(req,res){
-    res.send("<h1>Hello Express</h1>")
-});
-
-app.get("/goodbye",function(req,res){
-    res.send("<h1>Goodbye, Express</h1>")
-
-});
+app.use("/api",router)
+app.listen(3000)
