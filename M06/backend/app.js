@@ -15,11 +15,7 @@ app.use(bodyParser.json())
 router.get("/songs",async(req,res)=>{
     
     try{
-        // let query = {}
-        // if (req.query.genre)
-        //     {
-        //         query= {genre: req.query.genre}
-        //     }
+        
         const songs = await Song.find({})
         res.send(songs)
         console.log(songs)
@@ -52,7 +48,7 @@ router.post("/songs",async(req,res)=>{
     }
 })    
 
-router.put(":/id",async(req,res)=>{
+router.put("/:id",async(req,res)=>{
     try{
         const song = req.body
         await Song.updateOne({_id:req.params.id},song)
@@ -66,5 +62,5 @@ router.put(":/id",async(req,res)=>{
 })
 
 
-app.use('/api',router)
+app.use("/api",router)
 app.listen(3000)
