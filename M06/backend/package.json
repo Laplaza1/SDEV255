@@ -1,8 +1,15 @@
 {
+  
+  "name": "app.js",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "mongoose": "^8.16.4",
-    "npm": "^11.4.2"
+    "npm": "^11.4.2",
+    "path-to-regexp": "^6.2.1"
   }
 }
