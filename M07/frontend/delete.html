@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Song front end</title>
-    <script src="scripts/script.js"></script>
+    <script src="scripts/delete.js"></script>
     <script defer src="scripts/auth.js"></script>
     <script defer src="scripts/init.js"></script>
 </head>
@@ -15,9 +15,10 @@
         <a href="./delete.html">Delete Songs</a>
         <button id="logout" style="float: right;">Logout</button>
     </nav>
-    <h1>Songs</h1>
-    <ul id="list_of_songs">
-        
-    </ul>
+</br>
+    <form>
+        <select id="songDropDown"></select>
+        <input type="button" value="delete" id="deleteBtn">
+    </form>
 </body>
 </html>
