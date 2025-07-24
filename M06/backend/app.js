@@ -153,19 +153,30 @@ router.put("/:id",async(req,res)=>{
 
 })
 
-router.delete("/songs/:id",async(req,res)=>{
-    try{
-
-        const song = await Song.findById(req.params.id)
-        await Song.deleteOne({_id:song.__id})
-        res.sendStatus(204)}
-    catch(err)
+router.delete("/songs/:id",async(req,res)=>
     {
-        console.log(err)
-        res.status(400).send(err)
-    }
+        try
+            {
 
-})
+                const song = await Song.findById(req.params.id)
+                console.log(req.params.id)
+                console.log(song.__id)
+                const deleted = await Song.deleteOne({_id:req.params.id})
+                if(deleted)
+                    {
+                        res.sendStatus(204)
+                    }
+                else
+                    {
+                        res.sendStatus(504)
+                    }
+            }
+        catch(err)
+            {
+                console.log(err)
+                res.status(400).send(err)
+            }
+    })
 
 
 var port = process.env.PORT || 3000
