@@ -49,9 +49,11 @@ router.post("/auth",async(req,res)=>{
         res.status(400).json({error:"Missing username or password"})
         return
     }
+    console.log("Starting await User findOne")
     const user = await User.findOne({username: req.body.username})
         if (user.ok)
             {
+                console.log(user)
             if (!user)
                 {
                 res.status(401).json({error:"Bad Username"})
@@ -68,7 +70,7 @@ router.post("/auth",async(req,res)=>{
                     const token = jwt.encode({username: user.username},secret)
                     const auth =1
 
-                    res.json({
+                    res.status(200).json({
                         username2,
                         token:token,
                         auth:auth
