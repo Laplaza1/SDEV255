@@ -160,7 +160,7 @@ router.delete("/songs/:id",async(req,res)=>
 
                 const song = await Song.findById(req.params.id)
                 console.log(req.params.id)
-                console.log(song.__id)
+                console.log(song._id)
                 const deleted = await Song.deleteOne({_id:req.params.id})
                 if(deleted)
                     {
