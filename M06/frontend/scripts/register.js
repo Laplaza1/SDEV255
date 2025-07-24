@@ -23,8 +23,8 @@ async function addUser(){
 
     })
     if (response.ok){
-        const results = await response.json()
-        alert("Added user to db with id of"+ results._id )
+
+        
 
         document.querySelector("form").reset()
         window.location.replace("./login.html")

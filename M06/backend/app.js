@@ -49,33 +49,35 @@ router.post("/auth",async(req,res)=>{
         res.status(400).json({error:"Missing username or password"})
         return
     }
-    await User.findOne({username: req.body.username},function(err,user){
-        if(err){
-            res.status(400).send(err)
-        }
-        else if (!user){
-            res.status(401).json({error:"Bad Username"})
-        }
-        else{
-            if (user.password != req.body.password){
-                res.status(401).json({error:"Bad Password"})
-            }
+    const user = await User.findOne({username: req.body.username})
+        if (user.ok)
+            {
+            if (!user)
+                {
+                res.status(401).json({error:"Bad Username"})
+                }
             else{
+                if (user.password != req.body.password)
+                    {
+                    res.status(401).json({error:"Bad Password"})
+                    }
+                else
+                    {
 
-                username2 = user.username
-                const token = jwt.encode({username: user.username},secret)
-                const auth =1
+                    username2 = user.username
+                    const token = jwt.encode({username: user.username},secret)
+                    const auth =1
 
-                res.json({
-                    username2,
-                    token:token,
-                    auth:auth
-                })
+                    res.json({
+                        username2,
+                        token:token,
+                        auth:auth
+                    })
+                    }   
+                }
             }
-        }
-    })
 
-})
+    })
 
 router.get("/status",async(req,res)=>{
     if(!req.headers["x-auth"]){
