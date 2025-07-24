@@ -1,8 +1,8 @@
-const { METHODS } = require("http");
+
 
 addEventListener("DOMContentLoaded",async function(){
-    document.querySelector("#deleteBtn")/this.addEventListener("click",deleteSong);
-    getAllSongs()
+    document.querySelector("#deleteBtn").addEventListener("click",deleteSong);
+    getAllSongs();
 })
 
 async function getAllSongs(){

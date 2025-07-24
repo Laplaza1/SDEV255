@@ -44,38 +44,48 @@ router.post("/user",async(req,res)=>{
 })
 
 
-router.post("/auth",async(req,res)=>{
-    if(!req.body.username || !req.body.password){
-        res.status(400).json({error:"Missing username or password"})
-        return
-    }
-    await User.findOne({username: req.body.username},function(err,user){
-        if(err){
-            res.status(400).send(err)
-        }
-        else if (!user){
-            res.status(401).json({error:"Bad Username"})
-        }
-        else{
-            if (user.password != req.body.password){
-                res.status(401).json({error:"Bad Password"})
-            }
-            else{
+router.post("/auth",async(req,res)=>
+    {
+        try
+            {
+                if(!req.body.username || !req.body.password)
+                    {
+                        res.status(400).json({error:"Missing username or password"})
+                        return
+                    }
+                console.log("Starting await User findOne")
+                const user = await User.findOne({username: req.body.username})
+                    if (user)
+                        {
+                            console.log(user)
+                            if (!user)
+                                {
+                                res.status(401).json({error:"Bad Username"})
+                                }
+                            else
+                                {
+                                    if (user.password != req.body.password)
+                                    {
+                                    res.status(401).json({error:"Bad Password"})
+                                    }
+                                    else
+                                    {
 
-                username2 = user.username
-                const token = jwt.encode({username: user.username},secret)
-                const auth =1
+                                        username2 = user.username
+                                        const token = jwt.encode({username: user.username},secret)
+                                        const auth =1
 
-                res.json({
-                    username2,
-                    token:token,
-                    auth:auth
-                })
-            }
-        }
-    })
-
-})
+                                        res.status(200).json(
+                                            {
+                                                username2,
+                                                token:token,
+                                                auth:auth
+                                            })
+                                    }   
+                                }
+                        }
+            }   
+    catch(err){res.send(err)}})
 
 router.get("/status",async(req,res)=>{
     if(!req.headers["x-auth"]){
@@ -143,19 +153,29 @@ router.put("/:id",async(req,res)=>{
 
 })
 
-router.delete("/songs/:id",async(req,res)=>{
-    try{
-
-        const song = await Song.findById(req.params.id)
-        await Song.deleteOne({_id:song.__id})
-        res.sendStatus(204)}
-    catch(err)
+router.delete("/songs/:id",async(req,res)=>
     {
-        console.log(err)
-        res.status(400).send(err)
-    }
+        try
+            {
 
-})
+                const song = await Song.findById(req.params.id)
+                
+                const deleted = await Song.deleteOne({_id:song._id})
+                if(deleted)
+                    {
+                        res.sendStatus(204)
+                    }
+                else
+                    {
+                        res.sendStatus(504)
+                    }
+            }
+        catch(err)
+            {
+                console.log(err)
+                res.status(400).send(err)
+            }
+    })
 
 
 var port = process.env.PORT || 3000

@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="scripts/register.js"></script>
+
 </head>
 <body>
     <h1>registration page</h1>
+    <form id="register" autocomplete="off">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username">
+
+        </div>
+        <div>
+            <label for="password">password:</label>
+            <input type="text" id="password">
+        </div>
+        <button id="registerBtn" type="button">Login</button>
+        <p id="errorMsg"></p>
+    </form>
 </body>
 </html>

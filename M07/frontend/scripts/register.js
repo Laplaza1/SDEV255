@@ -1,0 +1,36 @@
+addEventListener("DOMContentLoaded",function(){
+    document.querySelector("#registerBtn").addEventListener("click",addUser)
+    console.log("addUser Ran")
+
+})
+
+async function addUser(){
+    const user={
+    username: document.querySelector("#username").value,
+    password: document.querySelector("#password").value,
+    status: 1
+    
+
+ 
+    }
+    const response = await fetch('https://sdev255-m06.onrender.com/api/user',{
+        method:"POST",
+        headers:{
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
+
+
+    })
+    if (response.ok){
+
+        
+
+        document.querySelector("form").reset()
+        window.location.replace("./login.html")
+    }
+    else{
+        document.querySelector("#errorMsg").innerHTML = "Cannot add user"
+    }
+
+}
