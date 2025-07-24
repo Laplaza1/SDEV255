@@ -44,42 +44,48 @@ router.post("/user",async(req,res)=>{
 })
 
 
-router.post("/auth",async(req,res)=>{
-    if(!req.body.username || !req.body.password){
-        res.status(400).json({error:"Missing username or password"})
-        return
-    }
-    console.log("Starting await User findOne")
-    const user = await User.findOne({username: req.body.username})
-        if (user.ok)
+router.post("/auth",async(req,res)=>
+    {
+        try
             {
-                console.log(user)
-            if (!user)
-                {
-                res.status(401).json({error:"Bad Username"})
-                }
-            else{
-                if (user.password != req.body.password)
+                if(!req.body.username || !req.body.password)
                     {
-                    res.status(401).json({error:"Bad Password"})
+                        res.status(400).json({error:"Missing username or password"})
+                        return
                     }
-                else
-                    {
+                console.log("Starting await User findOne")
+                const user = await User.findOne({username: req.body.username})
+                    if (user)
+                        {
+                            console.log(user)
+                            if (!user)
+                                {
+                                res.status(401).json({error:"Bad Username"})
+                                }
+                            else
+                                {
+                                    if (user.password != req.body.password)
+                                    {
+                                    res.status(401).json({error:"Bad Password"})
+                                    }
+                                    else
+                                    {
 
-                    username2 = user.username
-                    const token = jwt.encode({username: user.username},secret)
-                    const auth =1
+                                        username2 = user.username
+                                        const token = jwt.encode({username: user.username},secret)
+                                        const auth =1
 
-                    res.status(200).json({
-                        username2,
-                        token:token,
-                        auth:auth
-                    })
-                    }   
-                }
-            }
-
-    })
+                                        res.status(200).json(
+                                            {
+                                                username2,
+                                                token:token,
+                                                auth:auth
+                                            })
+                                    }   
+                                }
+                        }
+            }   
+    catch(err){res.send(err)}})
 
 router.get("/status",async(req,res)=>{
     if(!req.headers["x-auth"]){
