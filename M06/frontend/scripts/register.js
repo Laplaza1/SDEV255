@@ -1,6 +1,6 @@
 addEventListener("DOMContentLoaded",function(){
     document.querySelector("#registerBtn").addEventListener("click",addUser)
-
+    console.log("addUser Ran")
 
 })
 
@@ -27,9 +27,10 @@ async function addUser(){
         alert("Added user to db with id of"+ results._id )
 
         document.querySelector("form").reset()
+        window.location.replace("./login.html")
     }
     else{
-        document.querySelector("#error").innerHTML = "Cannot add song"
+        document.querySelector("#errorMsg").innerHTML = "Cannot add user"
     }
 
 }
